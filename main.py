@@ -21,36 +21,40 @@ from sklearn.model_selection import train_test_split
 import pandas as pd
 from models import LogisticRegression
 
-ROOT_DIR_PREFIX = 'data/'
+ROOT_DIR_PREFIX = "data/"
 
-DATA_FILE_NAME = 'normalized_data.csv'
+DATA_FILE_NAME = "normalized_data.csv"
 # DATA_FILE_NAME = 'unnormalized_data.csv'
 # DATA_FILE_NAME = 'normalized_data_nosens.csv'
 
 CENSUS_FILE_PATH = ROOT_DIR_PREFIX + DATA_FILE_NAME
 
 NUM_CLASSES = 3
-BATCH_SIZE = 5 #tune this parameter
-CONV_THRESHOLD = .0005 #tune this parameter
+BATCH_SIZE = 5  # tune this parameter
+CONV_THRESHOLD = 0.0005  # tune this parameter
+
 
 def import_census(file_path):
-    '''
-        Helper function to import the census dataset
+    """
+    Helper function to import the census dataset
 
-        @param:
-            train_path: path to census train data + labels
-            test_path: path to census test data + labels
-        @return:
-            X_train: training data inputs
-            Y_train: training data labels
-            X_test: testing data inputs
-            Y_test: testing data labels
-    '''
-    data = np.genfromtxt(file_path, delimiter=',', skip_header=False)
+    @param:
+        train_path: path to census train data + labels
+        test_path: path to census test data + labels
+    @return:
+        X_train: training data inputs
+        Y_train: training data labels
+        X_test: testing data inputs
+        Y_test: testing data labels
+    """
+    data = np.genfromtxt(file_path, delimiter=",", skip_header=False)
     X = data[:, :-1]
     Y = data[:, -1].astype(int)
-    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3, random_state=0)
+    X_train, X_test, Y_train, Y_test = train_test_split(
+        X, Y, test_size=0.3, random_state=0
+    )
     return X_train, Y_train, X_test, Y_test
+
 
 def test_logreg():
     X_train, Y_train, X_test, Y_test = import_census(CENSUS_FILE_PATH)
@@ -69,13 +73,15 @@ def test_logreg():
 
     return acc
 
+
 def main():
 
-    # Set random seeds. DO NOT CHANGE THIS IN YOUR FINAL SUBMISSION.
+    # Set random seeds.
     random.seed(0)
     np.random.seed(0)
 
     test_logreg()
+
 
 if __name__ == "__main__":
     main()
